@@ -5,19 +5,6 @@ void main() {
   runApp(const MyApp());
 }
 
-//
-//
-// ContentView.Flutter
-// Spotify
-//
-// Welcome & Login screen
-//
-// Created by: Faiz Rhm
-
-// Mark: Github
-// Faiz Rhm
-// https://github.com/Faiz-rhm
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
