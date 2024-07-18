@@ -46,70 +46,90 @@ class SlidingDrawerState extends State<SlidingDrawer> {
     final height = MediaQuery.of(context).size.height;
     final drawerWidth = width * widget.drawerRatio;
 
-    return GestureDetector(
-      onHorizontalDragUpdate: (details) {
-        if (details.delta.dx > widget.swipeSensitivity) {
-          open();
-        } else if (details.delta.dx < -widget.swipeSensitivity) {
-          close();
-        }
-      },
-      child: SizedBox(
-        width: width,
-        height: height,
-        child: Stack(
-          children: [
-            AnimatedPositioned(
-              width: drawerWidth,
-              height: height,
-              left: _opened ? 0 : -drawerWidth,
-              duration: Duration(milliseconds: widget.animationDuration),
-              curve: widget.animationCurve,
-              child: Container(
-                color: Colors.amber,
-                child: widget.drawer,
+    return DrawerInheritedData(
+      drawerOpened: _opened,
+      open: open,
+      child: GestureDetector(
+        onHorizontalDragUpdate: (details) {
+          if (details.delta.dx > widget.swipeSensitivity) {
+            open();
+          } else if (details.delta.dx < -widget.swipeSensitivity) {
+            close();
+          }
+        },
+        child: SizedBox(
+          width: width,
+          height: height,
+          child: Stack(
+            children: [
+              AnimatedPositioned(
+                width: drawerWidth,
+                height: height,
+                left: _opened ? 0 : -drawerWidth,
+                duration: Duration(milliseconds: widget.animationDuration),
+                curve: widget.animationCurve,
+                child: Container(
+                  color: Colors.amber,
+                  child: widget.drawer,
+                ),
               ),
-            ),
-            AnimatedPositioned(
-              height: height,
-              width: width,
-              left: _opened ? drawerWidth : 0,
-              duration: Duration(milliseconds: widget.animationDuration),
-              curve: widget.animationCurve,
-              child: Stack(
-                fit: StackFit.expand,
-                children: [
-                  widget.child,
-                  AnimatedSwitcher(
-                    duration: Duration(milliseconds: widget.animationDuration),
-                    switchInCurve: widget.animationCurve,
-                    switchOutCurve: widget.animationCurve,
-                    child: _opened
-                        ? GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                _opened = false;
-                              });
-                            },
-                            child: Container(
-                              color: widget.overlayColor.withOpacity(
-                                widget.overlayOpacity,
+              AnimatedPositioned(
+                height: height,
+                width: width,
+                left: _opened ? drawerWidth : 0,
+                duration: Duration(milliseconds: widget.animationDuration),
+                curve: widget.animationCurve,
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    widget.child,
+                    AnimatedSwitcher(
+                      duration:
+                          Duration(milliseconds: widget.animationDuration),
+                      switchInCurve: widget.animationCurve,
+                      switchOutCurve: widget.animationCurve,
+                      child: _opened
+                          ? GestureDetector(
+                              onTap: () {
+                                setState(() {
+                                  _opened = false;
+                                });
+                              },
+                              child: Container(
+                                color: widget.overlayColor.withOpacity(
+                                  widget.overlayOpacity,
+                                ),
                               ),
-                            ),
-                          )
-                        : null,
-                  )
-                ],
+                            )
+                          : null,
+                    )
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
 }
 
-class DrawerNotification extends Notification {
-  final bool? drawerOpened = false;
-  const DrawerNotification();
+class DrawerInheritedData extends InheritedWidget {
+  final bool drawerOpened;
+  final VoidCallback open;
+
+  const DrawerInheritedData({
+    Key? key,
+    required this.open,
+    required this.drawerOpened,
+    required Widget child,
+  }) : super(key: key, child: child);
+  static DrawerInheritedData? of(BuildContext context) {
+    return context.dependOnInheritedWidgetOfExactType<DrawerInheritedData>();
+  }
+
+  @override
+  bool updateShouldNotify(DrawerInheritedData oldWidget) {
+    return oldWidget.drawerOpened != drawerOpened;
+  }
 }

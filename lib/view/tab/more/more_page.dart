@@ -33,24 +33,6 @@ class MorePage extends StatelessWidget {
             const SizedBox(height: 8),
             const CustomTitle(title: 'Your Activities'),
             const SizedBox(height: 16,),
-            const ActivityCard(
-              title: 'Liked Songs',
-              icon: Icons.favorite
-            ),
-            Divider(
-              color: Colors.grey.shade800,
-            ),
-            const ActivityCard(
-              title: 'Followed Artist',
-              icon: Icons.people
-            ),
-            Divider(
-              color: Colors.grey.shade800,
-            ),
-            const ActivityCard(
-              title: 'Followed Podcast',
-              icon: Icons.mic
-            ),
             Divider(
               color: Colors.grey.shade800,
             ),
@@ -72,7 +54,32 @@ class MorePage extends StatelessWidget {
           fontWeight: FontWeight.w600
         )),
       ),
-    )
+    ),
+    Divider(
+              color: Colors.grey.shade800,
+            ),
+            const ActivityCard(
+              title: 'Liked Songs',
+              icon: Icons.favorite
+            ),
+            Divider(
+              color: Colors.grey.shade800,
+            ),
+            const ActivityCard(
+              title: 'Followed Artist',
+              icon: Icons.people
+            ),
+            Divider(
+              color: Colors.grey.shade800,
+            ),
+            const ActivityCard(
+              title: 'Followed Podcast',
+              icon: Icons.mic
+            ),
+            Divider(
+              color: Colors.grey.shade800,
+            ),
+            
           ],
         ),
       ),

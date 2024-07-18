@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mb_spotify_pr/view/widgets/player.dart';
 import 'package:mb_spotify_pr/constants/colors.dart';
 import 'package:mb_spotify_pr/view/tab/home/home_page.dart';
 import 'package:mb_spotify_pr/view/tab/more/more_page.dart';
@@ -35,20 +36,30 @@ class _TabsState extends State<Tabs> {
 
   Widget _buildDrawer() {
     return Container(
+        decoration: BoxDecoration(
+          color: ColorConstants.cardBackGroundColor,
+        ),
         padding: EdgeInsets.all(10.0),
         alignment: Alignment.topLeft,
         child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+          SizedBox(height: 10),
           // Profile
           Container(
             child: Row(children: [
               CircleAvatar(backgroundColor: Colors.red, child: Text("V")),
               SizedBox(width: 10),
               Column(children: [
-                Text("Vm0077", style: TextStyle(fontSize: 20)),
-                Text("view profile", style: TextStyle(fontSize: 16)),
+                Text("Vm0077",
+                    style: TextStyle(
+                        fontSize: 20, color: ColorConstants.starterWhite)),
+                Text("view profile",
+                    style: TextStyle(
+                        fontSize: 16, color: ColorConstants.starterWhite)),
               ]),
             ]),
           ),
+          SizedBox(height: 10),
+          Divider(),
           // Setting List
           Expanded(
             child: ListView.builder(
@@ -61,8 +72,13 @@ class _TabsState extends State<Tabs> {
                         Icon(
                           drawer_list[index]["icon"],
                           size: 30,
+                          color: ColorConstants.starterWhite,
                         ),
-                        Text(drawer_list[index]["title"])
+                        SizedBox(width: 5),
+                        Text(drawer_list[index]["title"],
+                            style: TextStyle(
+                              color: ColorConstants.starterWhite,
+                            ))
                       ]),
                     ),
                     onTap: () {
@@ -77,7 +93,14 @@ class _TabsState extends State<Tabs> {
   Widget _scaffoldPage() {
     return Scaffold(
       backgroundColor: Colors.black,
-      body: _screen[_selectedIndex],
+      body: Stack(children: [
+        _screen[_selectedIndex],
+        Positioned(
+          child: Player(),
+          left: 0,
+          bottom: 0,
+        ),
+      ]),
       bottomNavigationBar: BottomNavigationBar(
         showSelectedLabels: false,
         showUnselectedLabels: false,
