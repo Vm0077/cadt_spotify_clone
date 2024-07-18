@@ -24,8 +24,8 @@ class PlayListCard extends StatelessWidget {
             color: ColorConstants.cardBackGroundColor,
             borderRadius: BorderRadius.circular(10)
           ),
-          padding: const EdgeInsets.only(top: 10,),
-          margin: const EdgeInsets.all(4),
+          padding: const EdgeInsets.only(top: 1,),
+          margin: const EdgeInsets.all(1),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [

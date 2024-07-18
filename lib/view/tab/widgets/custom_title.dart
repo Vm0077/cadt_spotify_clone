@@ -9,10 +9,15 @@ class CustomTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(title, style: const TextStyle(
-      color: Colors.white,
-      fontSize: 18,
-      fontWeight: FontWeight.w600
-    ),);
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Text(title, style: const TextStyle(
+          color: Colors.white,
+          fontSize: 18,
+          fontWeight: FontWeight.w600
+        ),),
+      ],
+    );
   }
 }

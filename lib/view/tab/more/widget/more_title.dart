@@ -19,12 +19,12 @@ class MoreTitle extends StatelessWidget {
           fontStyle: FontStyle.normal
         )),
         const SizedBox(width: 64,),
+        // IconButton(
+        //   icon: const Icon(Icons.search, color: Colors.white,),
+        //   onPressed: () {},
+        // ),
         IconButton(
-          icon: const Icon(Icons.search, color: Colors.white,),
-          onPressed: () {},
-        ),
-        IconButton(
-          icon: const Icon(Icons.person_sharp, color: Colors.white,),
+          icon: const Icon(Icons.more_vert, color: Colors.white,),
           onPressed: () {},
         ),
       ],
