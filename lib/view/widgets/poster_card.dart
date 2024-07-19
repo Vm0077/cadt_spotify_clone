@@ -441,7 +441,8 @@ class _FillRecordCardState extends State<FillRecordCard>
           icon: Icon(Icons.play_circle_sharp),
           color: Colors.white,
           onPressed: () {
-            //click
+            Provider.of<PlayerModel>(context, listen: false)
+                .changeSong(widget.playList.songs![_currentPageIndex]);
           },
         ),
       ]),
