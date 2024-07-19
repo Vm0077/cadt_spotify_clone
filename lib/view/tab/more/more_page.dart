@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mb_spotify_pr/state_management/fav_screen.dart';
 import 'package:mb_spotify_pr/view/tab/more/widget/activity_card.dart';
 import 'package:mb_spotify_pr/view/tab/more/widget/developer.dart';
 import 'package:mb_spotify_pr/view/tab/more/widget/liked_song.dart';
@@ -72,7 +73,7 @@ class MorePage extends StatelessWidget {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (BuildContext context) => LikedSongsPage(),
+                      builder: (BuildContext context) => FavoriteMixesScreen(),
                     ));
               },
               child: ListTile(
@@ -83,7 +84,7 @@ class MorePage extends StatelessWidget {
                   color: Colors.white,
                   size: 46,
                 ),
-                title: Text('Liked Songs',
+                title: Text('Favorite Songs',
                     style: const TextStyle(
                         fontSize: 17,
                         color: Colors.white,

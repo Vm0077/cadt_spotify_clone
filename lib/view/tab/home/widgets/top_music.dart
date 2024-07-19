@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:mb_spotify_pr/state_management/library_list.dart';
+import 'package:provider/provider.dart';
 import 'package:mb_spotify_pr/constants/colors.dart';
 import 'package:mb_spotify_pr/data/data.dart';
 import 'package:mb_spotify_pr/view/top_hits/top_hits.dart';
@@ -11,7 +13,7 @@ class TopMusic extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 220,
+      height: 270,
       child: ListView.builder(
         shrinkWrap: true,
         itemCount: topMixes.length,
@@ -25,7 +27,7 @@ class TopMusic extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 color: ColorConstants.cardBackGroundColor,
-                borderRadius: BorderRadius.circular(10)
+                borderRadius: BorderRadius.circular(10),
               ),
               padding: const EdgeInsets.only(right: 15, left: 15, top: 15, bottom: 0),
               margin: const EdgeInsets.all(4),
@@ -41,8 +43,8 @@ class TopMusic extends StatelessWidget {
                       borderRadius: BorderRadius.circular(15),
                       image: DecorationImage(
                         image: AssetImage(topMix['image']),
-                        fit: BoxFit.cover
-                      )
+                        fit: BoxFit.cover,
+                      ),
                     ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.end,
@@ -52,7 +54,7 @@ class TopMusic extends StatelessWidget {
                           width: 7,
                           height: 24,
                           decoration: BoxDecoration(
-                            color: hexToColor(topMix['color'])
+                            color: hexToColor(topMix['color']),
                           ),
                         ),
                         const SizedBox(height: 12,),
@@ -63,29 +65,59 @@ class TopMusic extends StatelessWidget {
                             borderRadius: const BorderRadius.only(
                               bottomLeft: Radius.circular(15),
                               bottomRight: Radius.circular(15),
-                            )
+                            ),
                           ),
                         ),
                       ],
-                    )
+                    ),
                   ),
                   const SizedBox(height: 8,),
-                  Text(topMix['title'], style: TextStyle(
-                    color: ColorConstants.starterWhite,
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                  )),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        topMix['title'],
+                        style: TextStyle(
+                          color: ColorConstants.starterWhite,
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                      Consumer<MixProvider>(
+                    builder: (context, mixProvider, child) {
+                      final isFavorite = mixProvider.isFavorite(topMix);
+                      return IconButton(
+                        icon: Icon(
+                          isFavorite ? Icons.favorite : Icons.favorite_border,
+                          color: isFavorite ? Colors.red : null,
+                        ),
+                        onPressed: () {
+                          if (isFavorite) {
+                            mixProvider.removeFromFavorites(topMix);
+                          } else {
+                            mixProvider.addToFavorites(topMix);
+                          }
+                        },
+                      );
+                    },
+                  ),
+                    ],
+                  ),
                   const SizedBox(height: 2,),
-                  Text(topMix['description'], style: TextStyle(
-                    color: ColorConstants.starterWhite,
-                    fontSize: 11,
-                    fontWeight: FontWeight.w400,
-                  ))
+                  Text(
+                    topMix['description'],
+                    style: TextStyle(
+                      color: ColorConstants.starterWhite,
+                      fontSize: 11,
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
                 ],
               ),
             ),
           );
-      }),
+        },
+      ),
     );
   }
 }

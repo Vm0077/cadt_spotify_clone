@@ -46,7 +46,7 @@ class DeveloperMembersPage extends StatelessWidget {
       name: 'Rim Kunvath',
       title: 'Flutter Developer',
       bio:
-          'Rim Kunvath is a passionate Flutter developer with 3 years of experience in building cross-platform mobile applications. He enjoys creating beautiful and functional user interfaces.',
+          'Rim Kunvath is a passionate Flutter developer with 1 years of experience in building cross-platform mobile applications. He enjoys creating beautiful and functional user interfaces.',
       skills: ['Dart', 'Flutter', 'Firebase', 'REST APIs'],
       imagePath: 'https://th.bing.com/th/id/OIP.OgRB0U7cw81ZoY9UyZVWvAHaHa?rs=1&pid=ImgDetMain',
     ),
