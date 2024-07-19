@@ -18,7 +18,6 @@ class Artist extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, int index) {
             final artist = artists[index];
-
             return Container(
               width: 155,
               padding: const EdgeInsets.only(
@@ -29,10 +28,13 @@ class Artist extends StatelessWidget {
               ),
               child: Column(
                 children: [
-                  SizedBox(
-                      height: 125,
-                      width: 125,
-                      child: Image.asset(artist['image'])),
+                  ClipRRect(
+                    borderRadius: BorderRadius.circular(125),
+                    child: SizedBox(
+                        height: 125,
+                        width: 125,
+                        child: Image.network(artist['image'])),
+                  ),
                   const SizedBox(
                     height: 16,
                   ),

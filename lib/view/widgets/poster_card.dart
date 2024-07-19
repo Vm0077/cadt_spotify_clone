@@ -4,6 +4,8 @@ import 'package:card_swiper/card_swiper.dart';
 import 'package:text_scroll/text_scroll.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 import 'package:mb_spotify_pr/constants/colors.dart';
+import 'package:provider/provider.dart';
+import 'package:mb_spotify_pr/player_module.dart';
 
 class RecordCard extends StatelessWidget {
   const RecordCard(
@@ -39,18 +41,39 @@ class RecordCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Widget _build = Container(
-      padding: EdgeInsets.all(10.0),
       decoration: BoxDecoration(
         color: color,
       ),
       height: 300,
-      child: Column(children: [
-        _buildCardheader(),
-        Expanded(
-          flex: 1,
-          child: _buildDescription(),
+      child: Stack(children: [
+        Container(
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            decoration: BoxDecoration(
+                gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                Color.fromARGB(0, 0, 0, 0),
+                Color.fromARGB(0, 0, 0, 0),
+                Color.fromARGB(100, 0, 0, 0),
+                Color.fromARGB(120, 0, 0, 0),
+                Color.fromARGB(140, 0, 0, 0),
+              ],
+            ))),
+        Container(
+          padding: EdgeInsets.all(10.0),
+          child: Column(
+            children: [
+              _buildCardheader(),
+              Expanded(
+                flex: 1,
+                child: _buildDescription(),
+              ),
+              _buildCardControl(),
+            ],
+          ),
         ),
-        _buildCardControl(),
       ]),
     );
     return Card(
@@ -125,7 +148,7 @@ class RecordCard extends StatelessWidget {
                 color: Colors.grey[100],
                 size: 15.0,
               ),
-              label: Text('preview episode', style: TextStyle(fontSize: 12)),
+              label: Text('preview episode', style: TextStyle(fontSize: 10)),
               onPressed: () {
                 print('Button Pressed');
               },
@@ -215,7 +238,7 @@ class _FillRecordCardState extends State<FillRecordCard>
             controller: _swiperController,
             itemBuilder: (context, index) {
               return ZoomImage(
-                  cover: widget.playList.songs![index].url,
+                  cover: widget.playList.songs![index].cover,
                   animating: _animating);
             },
           ),
@@ -394,7 +417,8 @@ class _FillRecordCardState extends State<FillRecordCard>
                       widget.playList.songs![_currentPageIndex].artist +
                       '       '),
               onPressed: () {
-                print('Button Pressed');
+                Provider.of<PlayerModel>(context, listen: false)
+                    .changeSong(widget.playList.songs![_currentPageIndex]);
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color.fromARGB(255, 30, 30, 30),

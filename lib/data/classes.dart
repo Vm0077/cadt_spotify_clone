@@ -2,12 +2,12 @@ class Song {
   final String title;
   final String type;
   final String artist;
-  final String url;
+  final String cover;
   const Song({
     required this.title,
     required this.type,
     required this.artist,
-    required this.url,
+    required this.cover,
   });
 }
 

@@ -14,35 +14,47 @@ class PlayListCard extends StatelessWidget {
       physics: const BouncingScrollPhysics(),
       itemCount: playList.length,
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+        childAspectRatio: 4 / 5,
         crossAxisCount: 2,
+        crossAxisSpacing: 10,
+        mainAxisSpacing: 10,
       ),
       itemBuilder: (context, int index) {
         final play = playList[index];
 
         return Container(
           decoration: BoxDecoration(
-            color: ColorConstants.cardBackGroundColor,
-            borderRadius: BorderRadius.circular(10)
+              color: ColorConstants.cardBackGroundColor,
+              borderRadius: BorderRadius.circular(10)),
+          padding: const EdgeInsets.only(
+            top: 1,
           ),
-          padding: const EdgeInsets.only(top: 1,),
           margin: const EdgeInsets.all(1),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Wrap(
-                children: [
-                  PlayListImage(image: play['image_1']),
-                  PlayListImage(image: play['image_2']),
-                  PlayListImage(image: play['image_3']),
-                  PlayListImage(image: play['image_4']),
-                ],
+              Container(
+                padding: const EdgeInsets.all(10),
+                child: GridView.count(
+                  crossAxisCount: 2,
+                  shrinkWrap: true,
+                  children: [
+                    PlayListImage(image: play['image_1']),
+                    PlayListImage(image: play['image_2']),
+                    PlayListImage(image: play['image_3']),
+                    PlayListImage(image: play['image_4']),
+                  ],
+                ),
               ),
-              const SizedBox(height: 4,),
-              Text(play['title'], style: TextStyle(
-                color: ColorConstants.starterWhite,
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-              )),
+              const SizedBox(
+                height: 4,
+              ),
+              Text(play['title'],
+                  style: TextStyle(
+                    color: ColorConstants.starterWhite,
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                  )),
             ],
           ),
         );
@@ -62,14 +74,8 @@ class PlayListImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 66,
-      width: 75,
       decoration: BoxDecoration(
-        image: DecorationImage(
-          image: AssetImage(image),
-          fit: BoxFit.cover
-        )
-      ),
+          image: DecorationImage(image: AssetImage(image), fit: BoxFit.cover)),
     );
   }
 }

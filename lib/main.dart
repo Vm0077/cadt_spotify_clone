@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:mb_spotify_pr/view/get_started/get_started_page.dart';
+import 'package:mb_spotify_pr/player_module.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(ChangeNotifierProvider(
+    create: (context) => PlayerModel(),
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
