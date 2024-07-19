@@ -157,7 +157,7 @@ const PlayList pl1 = PlayList(
 
 const PlayList pl2 = PlayList(
     title: "Night Drive",
-    cover: "https://i.scdn.co/image/ab67706f00000002d56955aeca2541ee8d9cd026",
+    cover: "https://i.scdn.co/image/ab67706f000000023df638bf5c33922ceb4c185a",
     type: "R&B, City-Pop",
     description: "vibing with at night through driving",
     songs: [

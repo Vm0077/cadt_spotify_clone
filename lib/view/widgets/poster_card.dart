@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:mb_spotify_pr/data/classes.dart';
+import 'package:card_swiper/card_swiper.dart';
+import 'package:text_scroll/text_scroll.dart';
+import 'package:visibility_detector/visibility_detector.dart';
+import 'package:mb_spotify_pr/constants/colors.dart';
 
 class RecordCard extends StatelessWidget {
   const RecordCard(
@@ -186,23 +190,10 @@ class FillRecordCard extends StatefulWidget {
 
 class _FillRecordCardState extends State<FillRecordCard>
     with TickerProviderStateMixin {
-  late PageController _pageViewController;
-  late TabController _tabController;
+  SwiperController _swiperController = SwiperController();
   int _currentPageIndex = 1;
-
-  @override
-  void initState() {
-    super.initState();
-    _pageViewController = PageController(initialPage: 0);
-    _tabController = TabController(length: 3, vsync: this);
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _pageViewController.dispose();
-    _tabController.dispose();
-  }
+  bool _hasbeenCheck = false;
+  bool _animating = true;
 
   @override
   Widget build(BuildContext context) {
@@ -215,13 +206,17 @@ class _FillRecordCardState extends State<FillRecordCard>
       child: Stack(
         children: [
           // background
-          PageView.builder(
+          Swiper(
             /// [PageView.scrollDirection] defaults to [Axis.horizontal].
             /// Use [Axis.vertical] to scroll vertically.
-            controller: _pageViewController,
-            onPageChanged: _handlePageViewChanged,
+            loop: true,
+            onIndexChanged: _handlePageViewChanged,
+            itemCount: widget.playList.songs!.length,
+            controller: _swiperController,
             itemBuilder: (context, index) {
-              return ZoomImage(cover: widget.playList.songs![index].url);
+              return ZoomImage(
+                  cover: widget.playList.songs![index].url,
+                  animating: _animating);
             },
           ),
           // content
@@ -249,18 +244,41 @@ class _FillRecordCardState extends State<FillRecordCard>
                   ),
                   _buildCardControl(),
                 ]),
+
+                // forward arrow
                 Positioned(
-                  top: 0,
-                  bottom: 0,
-                  right: 0,
-                  child: IconButton(
-                      color: Colors.blue,
-                      icon: Icon(Icons.arrow_right),
-                      iconSize: 50,
-                      onPressed: () {
-                        print(_currentPageIndex);
-                        _updateCurrentPageIndex((_currentPageIndex + 1) % 3);
-                      }),
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: IconButton(
+                        color: ColorConstants.cardBackGroundColor,
+                        icon:
+                            Icon(Icons.arrow_forward_ios, color: Colors.white),
+                        style: IconButton.styleFrom(
+                          backgroundColor: Color.fromARGB(100, 0, 0, 0),
+                          padding: EdgeInsets.all(0),
+                        ),
+                        iconSize: 15,
+                        onPressed: () {
+                          _swiperController.next();
+                        }),
+                  ),
+                ),
+                // backward arrow
+                Positioned(
+                  child: Align(
+                    alignment: Alignment.centerLeft,
+                    child: IconButton(
+                        color: ColorConstants.cardBackGroundColor,
+                        icon: Icon(Icons.arrow_back_ios, color: Colors.white),
+                        style: IconButton.styleFrom(
+                          backgroundColor: Color.fromARGB(100, 0, 0, 0),
+                          padding: EdgeInsets.all(0),
+                        ),
+                        iconSize: 15,
+                        onPressed: () {
+                          _swiperController.previous();
+                        }),
+                  ),
                 ),
               ],
             ),
@@ -278,25 +296,23 @@ class _FillRecordCardState extends State<FillRecordCard>
   }
 
   void _handlePageViewChanged(int currentPageIndex) {
-    _tabController.index = currentPageIndex;
     setState(() {
       _currentPageIndex = currentPageIndex;
+      _hasbeenCheck = true;
     });
   }
 
-  void _updateCurrentPageIndex(int index) {
-    _tabController.index = index;
-    if (index == 0) {
-      _pageViewController.jumpTo(
-        0,
-      );
-      return;
-    }
-    _pageViewController.animateToPage(
-      index,
-      duration: const Duration(milliseconds: 400),
-      curve: Curves.easeInOut,
-    );
+  void _disableAnimation() {
+    setState(() {
+      _hasbeenCheck = false;
+      _animating = false;
+    });
+  }
+
+  void _enableAnimation() {
+    setState(() {
+      _animating = true;
+    });
   }
 
   Widget _buildCardheader() {
@@ -332,13 +348,23 @@ class _FillRecordCardState extends State<FillRecordCard>
             ),
           ],
         ),
-        IconButton(
-          iconSize: 25,
-          icon: Icon(Icons.add_circle_outline_rounded),
-          color: Colors.white,
-          onPressed: () {
-            //click
+        VisibilityDetector(
+          key: Key("playlist-${ObjectKey(widget.playList.title)}"),
+          onVisibilityChanged: (VisibilityInfo info) {
+            if (info.visibleBounds.bottom == 0) {
+              _disableAnimation();
+              return;
+            }
+            _enableAnimation();
           },
+          child: IconButton(
+            iconSize: 25,
+            icon: Icon(Icons.add_circle_outline_rounded),
+            color: Colors.white,
+            onPressed: () {
+              //click
+            },
+          ),
         ),
       ],
     );
@@ -355,24 +381,31 @@ class _FillRecordCardState extends State<FillRecordCard>
         child: Container(
           width: 10,
           child: ElevatedButton.icon(
+              key: ObjectKey(widget.playList.songs![_currentPageIndex]),
               icon: Icon(
                 Icons.volume_up,
                 color: Colors.grey[100],
                 size: 15.0,
               ),
-              label: Text('preview episode', style: TextStyle(fontSize: 12)),
+              label: !_hasbeenCheck
+                  ? Text("preview playlist", style: TextStyle(fontSize: 11))
+                  : TextScroll(widget.playList.songs![_currentPageIndex].title +
+                      ' - ' +
+                      widget.playList.songs![_currentPageIndex].artist +
+                      '       '),
               onPressed: () {
                 print('Button Pressed');
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Color.fromARGB(255, 30, 30, 30),
                 foregroundColor: Colors.white,
+                padding: EdgeInsets.symmetric(horizontal: 10),
               )),
         ),
       ),
       Row(children: [
         IconButton(
-          iconSize: 25,
+          iconSize: 20,
           icon: Icon(Icons.more_vert),
           color: Colors.white,
           onPressed: () {
@@ -380,7 +413,7 @@ class _FillRecordCardState extends State<FillRecordCard>
           },
         ),
         IconButton(
-          iconSize: 25,
+          iconSize: 20,
           icon: Icon(Icons.play_circle_sharp),
           color: Colors.white,
           onPressed: () {
@@ -399,14 +432,15 @@ class _FillRecordCardState extends State<FillRecordCard>
 }
 
 class ZoomImage extends StatefulWidget {
-  const ZoomImage({super.key, required this.cover});
+  const ZoomImage({super.key, required this.cover, required this.animating});
   final String cover;
+  final bool animating;
 
   @override
-  State<ZoomImage> createState() => _ZoomImageState();
+  State<ZoomImage> createState() => ZoomImageState();
 }
 
-class _ZoomImageState extends State<ZoomImage>
+class ZoomImageState extends State<ZoomImage>
     with SingleTickerProviderStateMixin {
   late Animation<double> animation;
   late AnimationController controller;
@@ -418,9 +452,10 @@ class _ZoomImageState extends State<ZoomImage>
         AnimationController(duration: const Duration(seconds: 12), vsync: this);
     animation = Tween<double>(begin: 1, end: 1.3).animate(controller)
       ..addListener(() {
-        setState(() {
-// The state that has changed here is the animation object's value.
-        });
+        if (!widget.animating) {
+          stop_animation();
+        }
+        setState(() {});
       });
     controller.forward();
   }
@@ -440,6 +475,14 @@ class _ZoomImageState extends State<ZoomImage>
         ),
       ),
     ));
+  }
+
+  void stop_animation() {
+    controller.stop();
+  }
+
+  void reset_animation() {
+    controller.reset();
   }
 
   @override
