@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class Player extends StatefulWidget {
-  const Player({Key? key}) : super(key: key);
+  const Player({Key? key, this.color}) : super(key: key);
+  final Color? color;
   @override
   State<StatefulWidget> createState() => _Player();
 }
@@ -9,11 +10,13 @@ class Player extends StatefulWidget {
 class _Player extends State<Player> {
   @override
   Widget build(BuildContext context) {
+    Color? color;
     return Container(
         height: 45,
         width: MediaQuery.of(context).size.width - 10,
         decoration: BoxDecoration(
-            color: Colors.red, borderRadius: BorderRadius.circular(5)),
+            color: color == null ? Colors.grey[500] : color,
+            borderRadius: BorderRadius.circular(5)),
         padding: EdgeInsets.all(5.0),
         margin: EdgeInsets.all(5.0),
         child: Row(children: [

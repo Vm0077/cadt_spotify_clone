@@ -7,6 +7,7 @@ import 'package:mb_spotify_pr/view/tab/home/widgets/best_of_artist.dart';
 import 'package:mb_spotify_pr/view/tab/widgets/custom_title.dart';
 import 'package:mb_spotify_pr/view/tab/widgets/welcome_title.dart';
 import 'package:mb_spotify_pr/view/widgets/poster_card.dart';
+import 'package:mb_spotify_pr/data/data.dart';
 import 'package:sticky_headers/sticky_headers.dart';
 
 class HomePage extends StatefulWidget {
@@ -59,6 +60,8 @@ class AllTab extends StatelessWidget {
       Artist(),
       BestOfArtist(),
       ..._records(),
+      FillRecordCard(playList: pl1, color: Color.fromARGB(255, 154, 20, 99)),
+      FillRecordCard(playList: pl2, color: Color.fromARGB(255, 154, 20, 99)),
     ];
     // TODO: implement build
     return Container(
@@ -79,8 +82,16 @@ class AllTab extends StatelessWidget {
 
   List<Widget> _records() {
     List<Widget> tmp = [];
+    String title = "sdf", type = "testing", description = "top";
+    music_playlist;
     for (int i = 0; i < 5; i++) {
-      tmp.add(new RecordCard());
+      tmp.add(new RecordCard(
+          title: title,
+          type: type,
+          url:
+              "https://upload.wikimedia.org/wikipedia/en/3/3b/Dark_Side_of_the_Moon.png",
+          description: "nice",
+          color: Color.fromARGB(255, 50, 50, 50)));
     }
     return tmp;
   }

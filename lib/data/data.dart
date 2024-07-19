@@ -1,48 +1,41 @@
+import "classes.dart";
+
 final List<Map<String, dynamic>> slider = [
   {
-    "title" : "30 Fresh music for you every week ",
-    "image" : "assets/images/yourDiscover.png",
+    "title": "30 Fresh music for you every week ",
+    "image": "assets/images/yourDiscover.png",
   },
   {
-    "title" : "New songs every friday",
-    "image" : "assets/images/friday.png",
+    "title": "New songs every friday",
+    "image": "assets/images/friday.png",
   },
 ];
 
 final List<Map<String, dynamic>> topMixes = [
   {
-    "title" : "Hip Hop Mix",
-    "description" : "Juice Wrld, Drake, Kendrick lamar and more... ",
-    "image" : "assets/images/music1.png",
-    "color" : "#EF0CAF"
+    "title": "Hip Hop Mix",
+    "description": "Juice Wrld, Drake, Kendrick lamar and more... ",
+    "image": "assets/images/music1.png",
+    "color": "#EF0CAF"
   },
   {
-    "title" : "Moody Mix",
-    "description" :  "Joji, The Kid LAROI, Tate McRae and more...",
-    "image" : "assets/images/music2.png",
-    "color" : "#FFFF00"
+    "title": "Moody Mix",
+    "description": "Joji, The Kid LAROI, Tate McRae and more...",
+    "image": "assets/images/music2.png",
+    "color": "#FFFF00"
   },
   {
-    "title" : "House Mix",
-    "description" :  "Martin Garrix, The Chainsmoker and more...",
-    "image" : "assets/images/music3.png",
-    "color" : "#1ED760"
+    "title": "House Mix",
+    "description": "Martin Garrix, The Chainsmoker and more...",
+    "image": "assets/images/music3.png",
+    "color": "#1ED760"
   },
 ];
 
 List<Map<String, dynamic>> artists = [
-  {
-    'image': 'assets/images/artist1.png',
-    'name' : 'The Kid LAROI'
-  },
-  {
-    'image':  'assets/images/artist2.png',
-    'name': 'Taylor Swift'
-  },
-  {
-    'image': 'assets/images/artist3.png',
-    'name': 'Post Malone'
-  }
+  {'image': 'assets/images/artist1.png', 'name': 'The Kid LAROI'},
+  {'image': 'assets/images/artist2.png', 'name': 'Taylor Swift'},
+  {'image': 'assets/images/artist3.png', 'name': 'Post Malone'}
 ];
 
 List<String> searchList = [
@@ -57,22 +50,21 @@ List<String> searchList = [
 
 final List<Map<String, dynamic>> podCast = [
   {
-    "title" : "Impaulsive",
-    "description" : "334 ep.",
-    "image" : "assets/images/impaulsive.png",
+    "title": "Impaulsive",
+    "description": "334 ep.",
+    "image": "assets/images/impaulsive.png",
   },
   {
-    "title" : "TED Talks Daily",
-    "description" : "155 ep.",
-    "image" : "assets/images/tedTalk.png",
+    "title": "TED Talks Daily",
+    "description": "155 ep.",
+    "image": "assets/images/tedTalk.png",
   },
   {
-    "title" : "Mom’s Basement",
-    "description" : "75 ep.",
-    "image" : "assets/images/momsBasement.png",
+    "title": "Mom’s Basement",
+    "description": "75 ep.",
+    "image": "assets/images/momsBasement.png",
   },
 ];
-
 
 final List<Map<String, dynamic>> playList = [
   {
@@ -106,34 +98,89 @@ final List<Map<String, dynamic>> playList = [
 ];
 
 final List<Map<String, dynamic>> topHit = [
-    {
-      'image': 'assets/images/music1.png',
-      'title': 'stay',
-      'description': 'The Kid LAROI, Justin Bieber',
-      'favorite': true,
-    },
-    {
-      'image': 'assets/images/wishingWall.png',
-      'title': 'Wishing Well',
-      'description': 'Juice WLRD',
-      'favorite': false,
-    },
-    {
-      'image': 'assets/images/jack.png',
-      'title': 'First Class',
-      'description': 'Jack Harlow',
-      'favorite': true,
-    },
-    {
-      'image': 'assets/images/Frame1.png',
-      'title': 'Unstable',
-      'description': 'Justin Bieber, The Kid LAROI',
-      'favorite': false,
-    },
-    {
-      'image': 'assets/images/Group25.png',
-      'title': 'Unstable',
-      'description': 'Justin Bieber, The Kid LAROI',
-      'favorite': false,
-    },
-  ];
+  {
+    'image': 'assets/images/music1.png',
+    'title': 'stay',
+    'description': 'The Kid LAROI, Justin Bieber',
+    'favorite': true,
+  },
+  {
+    'image': 'assets/images/wishingWall.png',
+    'title': 'Wishing Well',
+    'description': 'Juice WLRD',
+    'favorite': false,
+  },
+  {
+    'image': 'assets/images/jack.png',
+    'title': 'First Class',
+    'description': 'Jack Harlow',
+    'favorite': true,
+  },
+  {
+    'image': 'assets/images/Frame1.png',
+    'title': 'Unstable',
+    'description': 'Justin Bieber, The Kid LAROI',
+    'favorite': false,
+  },
+  {
+    'image': 'assets/images/Group25.png',
+    'title': 'Unstable',
+    'description': 'Justin Bieber, The Kid LAROI',
+    'favorite': false,
+  },
+];
+
+const PlayList pl1 = PlayList(
+    title: "Hip-Hop Classic",
+    cover: "https://i.scdn.co/image/ab67706f00000002d56955aeca2541ee8d9cd026",
+    type: "Hip-Hop",
+    description: "get the real hip hop experience through the history",
+    songs: [
+      Song(
+          title: "Alright",
+          artist: "Kendrick Lamar",
+          type: "Hip-Hop",
+          url:
+              "https://i.scdn.co/image/ab67616d0000b273cdb645498cd3d8a2db4d05e1"),
+      Song(
+          title: "One beer",
+          artist: "MF Doom",
+          type: "Hip-Hop",
+          url:
+              "https://media.pitchfork.com/photos/65fb322409c7048f78ef661c/master/w_1280%2Cc_limit/Madvillainy.jpg"),
+      Song(
+          title: "Many Men",
+          artist: "50 cent",
+          type: "Hip-Hop",
+          url: "https://i1.sndcdn.com/artworks-tdpvjvnr3tpT-0-t500x500.jpg"),
+    ]);
+
+const PlayList pl2 = PlayList(
+    title: "Night Drive",
+    cover: "https://i.scdn.co/image/ab67706f00000002d56955aeca2541ee8d9cd026",
+    type: "R&B, City-Pop",
+    description: "vibing with at night through driving",
+    songs: [
+      Song(
+          title: "Night",
+          artist: "Frank Ocean",
+          type: "R&B",
+          url:
+              "https://best-fit.transforms.svdcdn.com/production/albums/frank-ocean-blond-compressed-0933daea-f052-40e5-85a4-35e07dac73df.jpg?w=1200&h=1200&q=100&auto=format&fit=crop&dm=1643652677&s=3f177eac28ab76a7197a764624863b2a"),
+      Song(
+          title: "Blinding Light",
+          artist: "The Weeknd",
+          type: "City-Pop",
+          url:
+              "https://upload.wikimedia.org/wikipedia/en/e/e6/The_Weeknd_-_Blinding_Lights.png"),
+      Song(
+          title: "Out of Time",
+          artist: "The Weekend",
+          type: "City-Pop",
+          url: "https://i1.sndcdn.com/artworks-nFL94gj3PZsO-0-t500x500.jpg"),
+    ]);
+
+const music_playlist = <PlayList>[
+  pl1,
+  pl2,
+];
