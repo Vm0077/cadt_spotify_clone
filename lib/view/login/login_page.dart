@@ -24,7 +24,7 @@ class _LoginPageState extends State<LoginPage> {
           child: Column(
             children: [
               Container(
-                height: height / 2,
+                height: height * 0.3,
                 width: double.infinity,
                 decoration: BoxDecoration(
                   color: ColorConstants.primaryColor,
@@ -37,14 +37,14 @@ class _LoginPageState extends State<LoginPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(
-                      height: 70,
+                      height: 60,
                       child: Image.asset('assets/images/logo.png'),
                     ),
                     const SizedBox(height: 20),
                     const Text(
                       'Millions of songs, free on Spotify',
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 16,
                         color: Colors.white,
                         fontWeight: FontWeight.w600,
                         fontFamily: 'Roboto',
@@ -53,10 +53,11 @@ class _LoginPageState extends State<LoginPage> {
                   ],
                 ),
               ),
-              Padding(
+              Container(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 32, vertical: 20),
+                    const EdgeInsets.symmetric(horizontal: 22, vertical: 5),
                 child: Container(
+                  height: 320,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(32),
@@ -69,16 +70,16 @@ class _LoginPageState extends State<LoginPage> {
                         const Text(
                           'Login Account',
                           style: TextStyle(
-                            fontSize: 23,
+                            fontSize: 18,
                             fontWeight: FontWeight.w500,
                           ),
                           textAlign: TextAlign.center,
                         ),
-                        const SizedBox(height: 22),
+                        const SizedBox(height: 16),
                         Input(
                             hint: 'Email or Username',
                             icon: Icons.email_outlined),
-                        const SizedBox(height: 16),
+                        const SizedBox(height: 10),
                         Input(
                             hint: 'Password', icon: Icons.visibility_outlined),
                         SwitchListTile.adaptive(
@@ -93,7 +94,7 @@ class _LoginPageState extends State<LoginPage> {
                           title: Text(
                             'Remember me',
                             style: TextStyle(
-                              fontSize: 14,
+                              fontSize: 12,
                               fontWeight: FontWeight.w400,
                               color: ColorConstants.starterWhite,
                             ),
@@ -103,7 +104,7 @@ class _LoginPageState extends State<LoginPage> {
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(31),
                           ),
-                          height: 40,
+                          height: 35,
                           color: ColorConstants.primaryColor,
                           onPressed: () => Navigator.push(
                             context,
@@ -120,51 +121,6 @@ class _LoginPageState extends State<LoginPage> {
                           ),
                         ),
                         const SizedBox(height: 10),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              child: Divider(
-                                thickness: 1,
-                                height: 1,
-                                color: ColorConstants.starterWhite,
-                              ),
-                            ),
-                            const SizedBox(width: 12),
-                            Text(
-                              'or',
-                              style: TextStyle(
-                                color: ColorConstants.starterWhite,
-                                fontSize: 13,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                            const SizedBox(width: 12),
-                            Expanded(
-                              child: Divider(
-                                thickness: 1,
-                                height: 1,
-                                color: ColorConstants.starterWhite,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 16),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            SizedBox(
-                              height: 40,
-                              child: Image.asset('assets/images/google+.png'),
-                            ),
-                            const SizedBox(width: 16),
-                            SizedBox(
-                              height: 40,
-                              child: Image.asset('assets/images/facebook.png'),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 16),
                         Text(
                           'Forget password?',
                           style: TextStyle(
@@ -211,30 +167,36 @@ class _LoginPageState extends State<LoginPage> {
 }
 
 class Input extends StatelessWidget {
-  const Input({Key? key, required this.hint, required this.icon})
+  const Input({Key? key, required this.hint, required this.icon, isPassword})
       : super(key: key);
 
   final String hint;
   final IconData icon;
+  final bool isPassword = false;
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      decoration: InputDecoration(
-        labelText: hint,
-        labelStyle: const TextStyle(
-          fontSize: 12,
-          fontWeight: FontWeight.w400,
+    return Container(
+      height: 45,
+      child: TextField(
+        style: TextStyle(fontSize: 12),
+        obscureText: isPassword,
+        decoration: InputDecoration(
+          labelText: hint,
+          labelStyle: const TextStyle(
+            fontSize: 12,
+            fontWeight: FontWeight.w400,
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(26),
+            borderSide: BorderSide(color: ColorConstants.starterWhite),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: ColorConstants.primaryColor),
+            borderRadius: const BorderRadius.all(Radius.circular(26)),
+          ),
+          suffixIcon: Icon(icon),
         ),
-        enabledBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(26),
-          borderSide: BorderSide(color: ColorConstants.starterWhite),
-        ),
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: ColorConstants.primaryColor),
-          borderRadius: const BorderRadius.all(Radius.circular(26)),
-        ),
-        suffixIcon: Icon(icon),
       ),
     );
   }

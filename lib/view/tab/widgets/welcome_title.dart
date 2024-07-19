@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:mb_spotify_pr/view/tab/widgets/slide_drawer.dart';
 import 'package:mb_spotify_pr/constants/colors.dart';
 
-class WelcomeTitle extends StatefulWidget {
-  const WelcomeTitle({
+class TabTitle extends StatefulWidget {
+  const TabTitle({
     super.key,
     Key? drawerKey,
     required this.changeTap,
@@ -14,10 +14,10 @@ class WelcomeTitle extends StatefulWidget {
   final ValueChanged<int> changeTap;
 
   @override
-  State<WelcomeTitle> createState() => _WelcomeTitleState();
+  State<TabTitle> createState() => _TabTitleState();
 }
 
-class _WelcomeTitleState extends State<WelcomeTitle> {
+class _TabTitleState extends State<TabTitle> {
   final List tabList = [
     "All",
     "Music",
@@ -70,6 +70,37 @@ class _WelcomeTitleState extends State<WelcomeTitle> {
           ),
         ],
       ),
+    );
+  }
+}
+
+class WelcomeTitle extends StatelessWidget {
+  const WelcomeTitle({
+    Key? key,
+    required this.title,
+  }) : super(key: key);
+
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(title,
+            style: const TextStyle(
+                color: Colors.white,
+                fontSize: 24,
+                fontWeight: FontWeight.w700,
+                fontStyle: FontStyle.normal)),
+        IconButton(
+          icon: const Icon(
+            Icons.more_vert,
+            color: Colors.white,
+          ),
+          onPressed: () {},
+        ),
+      ],
     );
   }
 }
