@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:mb_spotify_pr/state_management/library_list.dart';
-import 'package:mb_spotify_pr/view/get_started/get_started_page.dart';
 import 'package:provider/provider.dart';
+import 'package:mb_spotify_pr/view/get_started/get_started_page.dart';
+import 'package:mb_spotify_pr/player_module.dart';
 
 void main() {
-  runApp(
-    ChangeNotifierProvider(
-      create: (context) => MixProvider(),
-      child: MyApp(),
-    ),);
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (_) => PlayerModel()),
+      ChangeNotifierProvider(create: (_) => MixProvider()),
+    ],
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
