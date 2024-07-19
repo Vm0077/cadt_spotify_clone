@@ -3,11 +3,13 @@ class Song {
   final String type;
   final String artist;
   final String cover;
+  final bool? local;
   const Song({
     required this.title,
     required this.type,
     required this.artist,
     required this.cover,
+    this.local,
   });
 }
 

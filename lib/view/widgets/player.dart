@@ -15,6 +15,7 @@ class _Player extends State<Player> {
     Color? color;
     return Consumer<PlayerModel>(builder: (context, value, child) {
       return Container(
+          key: ObjectKey(value.song),
           height: 45,
           width: MediaQuery.of(context).size.width - 10,
           decoration: BoxDecoration(
@@ -23,16 +24,25 @@ class _Player extends State<Player> {
           padding: EdgeInsets.all(5.0),
           margin: EdgeInsets.all(5.0),
           child: Row(children: [
-            Image.network(value.song.cover),
+            if (value.song.local == true)
+              Image.asset(value.song.cover)
+            else
+              Image.network(value.song.cover),
             SizedBox(width: 8),
-            Expanded(
+            Flexible(
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(value.song.title,
-                        style: TextStyle(fontSize: 12, color: Colors.white)),
+                        style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.white,
+                            overflow: TextOverflow.ellipsis)),
                     Text(value.song.artist,
-                        style: TextStyle(fontSize: 11, color: Colors.grey[50]))
+                        style: TextStyle(
+                            fontSize: 11,
+                            color: Colors.grey[50],
+                            overflow: TextOverflow.ellipsis))
                   ]),
             ),
             IconButton(icon: Icon(Icons.speaker), onPressed: () {}),
